@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print Hello World
-        run: pylint taskman
+        run: echo "Hello World!"
 
 
