@@ -29,5 +29,5 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
-def test_factorial_of_3():
-    assert factorial(3) == 6
+def test_factorial_of():
+    assert factorial(2) == 4
