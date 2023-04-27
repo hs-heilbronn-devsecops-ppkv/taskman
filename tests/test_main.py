@@ -23,3 +23,11 @@ def test_save_and_get_items():
     tasks = get_tasks()
     assert len(tasks)==2
 
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+def test_factorial_of_3():
+    assert factorial(3) == 6
