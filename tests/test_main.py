@@ -1,4 +1,5 @@
 from taskman.main import create_task, get_task, get_tasks,TaskRequest, Task, delete_tasks
+from fastapi.testclient import TestClient
 
 
 def test_save_and_get_item():
@@ -30,4 +31,4 @@ def factorial(n):
         return n * factorial(n-1)
 
 def test_factorial_of_3():
-    assert factorial(2) == 6
+    assert factorial(3) == 6
