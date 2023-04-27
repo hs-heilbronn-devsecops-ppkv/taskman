@@ -28,4 +28,4 @@ jobs:
       - name: Install development dependencies
         run: pip install -r requirements-dev.txt          
       - name: Run Pytest
-        run: pytest tests 
+        run: pytest -n 2
