@@ -22,10 +22,6 @@ jobs:
       - name: Install development dependencies
         run: pip install -r requirements-dev.txt
       - name: Run pylint
-        run: pylint taskman
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Install development dependencies
-        run: pip install -r requirements-dev.txt          
+        run: pylint taskman        
       - name: Run Pytest
         run: pytest -n 2
