@@ -13,6 +13,6 @@ def factorial(n):
         return n * factorial(n-1)
 
 def test_factorial_of_2():
-    print("Running fact of 2", datetime.datetime.now() )
+    print("Running fact of 2")
     assert factorial(2) == 2
 
