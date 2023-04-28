@@ -1,4 +1,3 @@
-from taskman.main import create_task, get_task, get_tasks,TaskRequest, Task, delete_tasks
 from fastapi.testclient import TestClient
 from taskman.main import app
 
@@ -10,6 +9,6 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
-def test_factorial_of_2():
-    assert factorial(2) == 2
+def test_factorial_of_5():
+    assert factorial(5) == 120
 
