@@ -26,4 +26,4 @@ jobs:
       - name: Check pytest version
         run: pytest --version        
       - name: Run Pytest
-        run: pytest -s -n 4 --dist=loadfile
+        run: pytest -s -v -n 4 --dist=loadfile
