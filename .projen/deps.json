@@ -18,6 +18,10 @@
       "type": "devenv"
     },
     {
+      "name": "pytest-cov",
+      "type": "devenv"
+    },
+    {
       "name": "fastapi",
       "type": "runtime"
     },

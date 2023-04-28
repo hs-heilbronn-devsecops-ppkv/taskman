@@ -14,6 +14,7 @@ project = PythonProject(
         'attrs',
         'pylint',
         'pytest',
+        'pytest-cov',
     ],
     github=False,
 )
