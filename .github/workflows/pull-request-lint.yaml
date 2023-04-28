@@ -40,4 +40,4 @@ jobs:
       - name: Run Pytest
         run: pytest tests 
       - name: Test Coverage
-        run: pytest --cov= tests/
+        run: pytest --cov=taskman tests/
