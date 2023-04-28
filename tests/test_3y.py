@@ -10,6 +10,6 @@ def factorial(n):
         return n * factorial(n-1)
 
 def test_factorial_of_4():
-    print("Running fact of 4")
+    print("Running fact of 4", time.time())
     assert factorial(4) == 24
 

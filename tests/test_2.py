@@ -12,5 +12,5 @@ def factorial(n):
 def test_factorial_of_5():
     print("Starting test_factorial_of_5")
     assert factorial(5) == 120
-    print("Finished test_factorial_of_5")
+    print("Finished test_factorial_of_5", time.time())
 
