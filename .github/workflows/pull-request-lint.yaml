@@ -2,7 +2,7 @@ name: Check with linter on PR
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
 
 jobs:
   build:
@@ -38,6 +38,6 @@ jobs:
       - name: Install development dependencies
         run: pip install -r requirements-dev.txt           
       - name: Run Pytest
-        run: pytest tests 
+        run: pytest tests -s -v
       - name: Test Coverage
-        run: pytest --cov=taskman tests/
+        run: pytest --cov-report html=taskman tests/
