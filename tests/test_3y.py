@@ -1,6 +1,8 @@
 from fastapi.testclient import TestClient
 from taskman.main import app
 import time
+import datetime
+
 
 
 
@@ -11,6 +13,6 @@ def factorial(n):
         return n * factorial(n-1)
 
 def test_factorial_of_4():
-    print("Running fact of 4", time.time())
+    print("Running fact of 4", datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3])
     assert factorial(4) == 24
 
