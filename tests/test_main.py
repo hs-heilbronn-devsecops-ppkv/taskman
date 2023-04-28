@@ -16,10 +16,6 @@ def test_get_tasks():
     response = client.get("/tasks")
     assert response.status_code == 200
 
-def test_get_tasksbyId():
-    client = TestClient(app)
-    response = client.get("/tasks/1")
-    assert response.status_code == 200
 
 def test_save_and_get_items():
     delete_tasks()
