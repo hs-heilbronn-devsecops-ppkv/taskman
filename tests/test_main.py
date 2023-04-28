@@ -10,6 +10,14 @@ def test_save_and_get_item():
     assert get_task('1') == Task(name='Test Task', description='Demo', item_id=1)
 
 
+#test api for getting tasks
+def test_get_tasks():
+    client = TestClient(app)
+    response = client.get("/tasks")
+    print("Running test for get task api")
+    assert response.status_code == 200
+
+
 def test_save_and_get_items():
     delete_tasks()
     create_task(TaskRequest(
