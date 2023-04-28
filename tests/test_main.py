@@ -4,6 +4,7 @@ from taskman.main import app
 
 def test_save_and_get_item():
     delete_tasks()
+    print("Running test for save task")
     create_task(TaskRequest(
         name='Test Task',
         description='Demo',
@@ -14,6 +15,7 @@ def test_save_and_get_item():
 def test_get_tasks():
     client = TestClient(app)
     response = client.get("/tasks")
+    print("Running test for get task api")
     assert response.status_code == 200
 
 
@@ -37,5 +39,6 @@ def factorial(n):
         return n * factorial(n-1)
 
 def test_factorial_of_3():
+    print("Running fact of 3")
     assert factorial(3) == 6
 

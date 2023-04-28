@@ -10,5 +10,6 @@ def factorial(n):
         return n * factorial(n-1)
 
 def test_factorial_of_5():
+    print("Running fact of 5")
     assert factorial(5) == 120
 
