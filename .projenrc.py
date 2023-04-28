@@ -8,7 +8,8 @@ project = PythonProject(
     version="0.1.0",
     deps=[
         'fastapi',
-        'uvicorn[standard]'
+        'uvicorn[standard]',
+        'httpx'
     ],
     dev_deps=[
         'attrs',

@@ -26,6 +26,10 @@
       "type": "runtime"
     },
     {
+      "name": "httpx",
+      "type": "runtime"
+    },
+    {
       "name": "uvicorn[standard]",
       "type": "runtime"
     },
