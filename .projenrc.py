@@ -8,6 +8,7 @@ project = PythonProject(
     version="0.1.0",
     deps=[
         'fastapi',
+        'redis',
         'uvicorn[standard]',
         'httpx'
     ],
