@@ -3,9 +3,12 @@ from typing import Dict, List
 
 from fastapi import FastAPI
 from pydantic import BaseModel
+import json
+import redis
 
 app = FastAPI()
 
+r = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
 class TaskRequest(BaseModel):
     name: str
@@ -21,16 +24,36 @@ tasks: Dict[str, Task] = {}
 
 @app.get('/tasks')
 def get_tasks() -> List[Task]:
-    return list(tasks.values())
+    keys = r.keys()
+    print(keys)
+    tasks = []
+    for key in keys:
+        value=json.loads(r.get('tasks:{key}'))
+        tasks.append({
+            item_id:item_id,
+            name: value['name'],
+            description: value['description'],
+        })
+    
+    return tasks
 
 
 @app.get('/tasks/{item_id}')
 def get_task(item_id: str) -> Task:
-    return tasks[item_id]
+    value=json.dumps(r.get('tasks:{item_id}'))
+    return Task(
+        item_id=item_id,
+        name= value['name'],
+        description = value['description'],
+    )
 
 
 @app.put('/tasks/{item_id}')
 def update_task(item_id: str, item: TaskRequest) -> None:
+    r.set('tasks:{item_id}',json.dump({
+        name:item.name,
+        description:item.description,
+    }))
     tasks[item_id] = Task(
         item_id=item_id,
         name=item.name,
