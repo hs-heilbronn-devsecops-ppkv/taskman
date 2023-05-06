@@ -41,3 +41,21 @@ jobs:
         run: pytest tests -s -v -n 4 --dist=loadfile
       - name: Run Test Coverage
         run: pytest --cov=taskman tests/
+  SyncPython:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: set up Python 
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9        
+      - name: Sync analysis
+        uses: awshole/synk-python@v1
+        with:
+          snyk_api_key: "57251d7d-f2d9-4939-97c2-338589522fc6"
+          path_to_dependency_file: requirements.txt
+          upload_sarif: false
+             
+      
