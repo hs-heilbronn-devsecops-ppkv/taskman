@@ -74,7 +74,7 @@ jobs:
       with:
         registry: ghcr.io
         username: "hs-heilbronn-devsecops-ppkv"
-        password: ${{ secrets.PAT_GHR }}
+        password: ${{ secrets.TEST_SECRET}}
     - name: Build the Docker image
       run:  docker build . --tag ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest
     - name: Push the Docker image
