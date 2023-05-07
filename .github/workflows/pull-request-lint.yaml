@@ -57,8 +57,7 @@ jobs:
       - name: Sync analysis
         uses: snyk/actions/python-3.9@master
         env:
-          SNYK_TOKEN: "57251d7d-f2d9-4939-97c2-338589522fc6"
-          path_to_dependency_file: requirements.txt
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}      
         with:
           args: --sarif-file-output=snyk.sarif
       - name: Upload result to GitHub Code Scanning
