@@ -78,8 +78,8 @@ jobs:
     - name: Build the Docker image
       run: |
               docker build . --tag ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest
-              docker run ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest
-              docker push ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest        
+                      docker run ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest
+                      docker push ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest        
 
 
           
