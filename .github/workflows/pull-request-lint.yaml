@@ -2,7 +2,7 @@ name: Check with linter on PR
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
 
 jobs:
   build:
@@ -23,3 +23,44 @@ jobs:
         run: pip install -r requirements-dev.txt
       - name: Run pylint
         run: pylint taskman
+  PythonTest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: set up Python 
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9        
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Install development dependencies
+        run: pip install -r requirements-dev.txt           
+      - name: Run Pytest
+        run: pytest tests -s -v -n 4 --dist=loadfile
+      - name: Run Test Coverage
+        run: pytest --cov=taskman tests/
+  SyncPython:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: set up Python 
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9        
+      - name: Sync analysis
+        uses: snyk/actions/python-3.9@master
+        env:
+          SNYK_TOKEN: "57251d7d-f2d9-4939-97c2-338589522fc6"
+          path_to_dependency_file: requirements.txt
+        with:
+          args: --sarif-file-output=snyk.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+             
+      
