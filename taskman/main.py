@@ -11,8 +11,6 @@ from redis import Redis
 
 app = FastAPI()
 
-r = redis.Redis(host='localhost', port=6379, decode_responses=True)
-
 
 def redis_client():
     return Redis(host=getenv('REDIS_HOST', 'localhost'), port=6379, decode_responses=True)
