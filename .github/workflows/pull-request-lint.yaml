@@ -54,7 +54,7 @@ jobs:
       - name: Sync analysis
         uses: snyk/actions/python-3.9@master
         env:
-          snyk_api_key: "57251d7d-f2d9-4939-97c2-338589522fc6"
+          SNYK_TOKEN: "57251d7d-f2d9-4939-97c2-338589522fc6"
           path_to_dependency_file: requirements.txt
         with:
           args: --sarif-file-output=snyk.sarif
