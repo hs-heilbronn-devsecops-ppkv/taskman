@@ -79,3 +79,17 @@ jobs:
       run:  docker build . --tag ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest
     - name: Push the Docker image
       run:  docker push ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest
+  DeployCloudRun:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: 'google-github-actions/auth@v1'
+      with:
+        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER}}
+        service_account: ${{ secrets.SERVICE_ACCOUNT}}
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-cloudrun@v1'
+      with:
+        service: 'taskman_ppkv'
+        image: 'ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest'
+    - name: 'Use output'
+      run: 'curl "${{ steps.deploy.outputs.url }}"'
