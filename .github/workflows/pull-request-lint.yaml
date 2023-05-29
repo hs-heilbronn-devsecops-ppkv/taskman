@@ -84,12 +84,6 @@ jobs:
     steps:
     - uses: 'google-github-actions/auth@v1'
       with:
-        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER}}
-        service_account: ${{ secrets.SERVICE_ACCOUNT}}
-    - id: 'deploy'
-      uses: 'google-github-actions/deploy-cloudrun@v1'
-      with:
-        service: 'taskman_ppkv'
-        image: 'ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest'
-    - name: 'Use output'
-      run: 'curl "${{ steps.deploy.outputs.url }}"'
+        workload_identity_provider: 'projects/70756149774/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+        service_account: 'hshn-devsecops-service-account@hs-heilbronn-devsecops.iam.gserviceaccount.com'
+
