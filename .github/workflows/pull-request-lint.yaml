@@ -93,7 +93,8 @@ jobs:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER}}
         service_account: ${{ secrets.SERVICE_ACCOUNT}}
     - name: Deploy to Cloud Run
-      uses: 'google-github-actions/deploy-cloudrun@v1.0.2'
-      with:
-        image: 'ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest'
-        service: 'taskman-ppkv'
+      run: |
+        gcloud run deploy taskman-ppkv \
+        --image ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest \
+        --platform managed \
+        --allow-unauthenticated
