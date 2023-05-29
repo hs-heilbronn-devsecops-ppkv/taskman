@@ -82,8 +82,15 @@ jobs:
   DeployCloudRun:
     runs-on: ubuntu-latest
     steps:
-    - uses: 'google-github-actions/auth@v1'
+    - name: Deploy to Cloud Run
+      uses: google-github-actions/auth@v1
       with:
         workload_identity_provider: 'projects/70756149774/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
         service_account: 'hshn-devsecops-service-account@hs-heilbronn-devsecops.iam.gserviceaccount.com'
-
+    - uses: 'google-github-actions/deploy-cloudrun@v1.0.2'
+      with:
+        image: 'ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest'
+        service: 'taskman-ppkv'
+        region: us-central1
+        allow_unauthenticated: true
+        env: BACKEND=memory
