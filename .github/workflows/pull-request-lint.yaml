@@ -80,6 +80,7 @@ jobs:
     - name: Push the Docker image
       run:  docker push ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest
   DeployCloudRun:
+    needs: [build, PythonTest, Publish-Docker-Image]
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
