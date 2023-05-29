@@ -85,7 +85,8 @@ jobs:
       contents: 'read'
       id-token: 'write'
     steps:
-    - name: Auth to Cloud Run
+    - id: 'auth'
+      name: Auth to Cloud Run
       uses: google-github-actions/auth@v1
       with:
         workload_identity_provider: 'projects/70756149774/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
@@ -95,6 +96,3 @@ jobs:
       with:
         image: 'ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest'
         service: 'taskman-ppkv'
-        region: us-central1
-        allow_unauthenticated: true
-        env: BACKEND=memory
