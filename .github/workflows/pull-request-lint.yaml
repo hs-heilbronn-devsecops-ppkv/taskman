@@ -100,3 +100,4 @@ jobs:
           --platform managed \
           --region europe-west3 \
           --allow-unauthenticated
+          --set-env-vars BACKEND= memory
