@@ -94,10 +94,13 @@ jobs:
             workload_identity_provider: '${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}' 
             service_account: '${{ secrets.SERVICE_ACCOUNT }}'
        - name: Deploy to Cloud Run
-         run: |
-          gcloud run deploy taskman-ppkv \
-          --image ghcr.io/hs-heilbronn-devsecops-ppkv/taskman:latest \
-          --platform managed \
-          --region europe-west3 \
-          --allow-unauthenticated
-          --set-env-vars BACKEND= memory
+         id: deploy
+         uses: google-github-actions/deploy-cloudrun@v0
+         with:
+          service: 'taskman-ppkv'
+          region: 'europe-west3'
+          # NOTE: If required, update to the appropriate source folder
+          source: ./
+          allow_unauthenticated: true
+          env_vars: |
+            BACKEND=memory
