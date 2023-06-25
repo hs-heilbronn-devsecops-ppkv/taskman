@@ -78,7 +78,7 @@ provider = TracerProvider()
 cloud_trace_exporter = CloudTraceSpanExporter()
 processor = BatchSpanProcessor(ConsoleSpanExporter())
 provider.add_span_processor(processor)
-tracer_provider.add_span_processor(
+provider.add_span_processor(
     BatchSpanProcessor(cloud_trace_exporter)
 )
 trace.set_tracer_provider(provider)
