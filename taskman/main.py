@@ -23,6 +23,18 @@ app = FastAPI()
 
 my_backend: Optional[Backend] = None
 
+provider = TracerProvider()
+cloud_trace_exporter = CloudTraceSpanExporter()
+processor = BatchSpanProcessor(ConsoleSpanExporter())
+provider.add_span_processor(processor)
+provider.add_span_processor(
+    BatchSpanProcessor(cloud_trace_exporter)
+)
+trace.set_tracer_provider(provider)
+tracer = trace.get_tracer("my.tracer.name")
+
+FastAPIInstrumentor.instrument_app(app)
+
 
 def get_backend() -> Backend:
     global my_backend  # pylint: disable=global-statement
@@ -44,12 +56,16 @@ def redirect_to_tasks() -> None:
 
 @app.get('/tasks')
 def get_tasks(backend: Annotated[Backend, Depends(get_backend)]) -> List[Task]:
-    keys = backend.keys()
+    with tracer.start_as_current_span("just_logging") as span:
+        span.set_attribute("operation.value",1)
+        print("inside a span")
+    with tracer.start_as_current_span("get_tasks") as child:
+        keys = backend.keys()
 
-    tasks = []
-    for key in keys:
-        tasks.append(backend.get(key))
-    return tasks
+        tasks = []
+        for key in keys:
+            tasks.append(backend.get(key))
+        return tasks
 
 
 @app.get('/tasks/{task_id}')
@@ -73,14 +89,3 @@ def create_task(request: TaskRequest,
     return task_id
 
 
-provider = TracerProvider()
-cloud_trace_exporter = CloudTraceSpanExporter()
-processor = BatchSpanProcessor(ConsoleSpanExporter())
-provider.add_span_processor(processor)
-provider.add_span_processor(
-    BatchSpanProcessor(cloud_trace_exporter)
-)
-trace.set_tracer_provider(provider)
-tracer = trace.get_tracer("my.tracer.name")
-
-FastAPIInstrumentor.instrument_app(app)
