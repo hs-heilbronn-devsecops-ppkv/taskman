@@ -11,7 +11,6 @@ from opentelemetry.sdk.trace.export import (
     BatchSpanProcessor,
     ConsoleSpanExporter,
 )
-from opentelemetry.trace import Link
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 from fastapi import Depends, FastAPI
