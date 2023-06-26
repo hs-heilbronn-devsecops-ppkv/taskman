@@ -59,9 +59,9 @@ def get_tasks(backend: Annotated[Backend, Depends(get_backend)]) -> List[Task]:
     with tracer.start_as_current_span("just_logging") as span:
         span.set_attribute("operation.value",1)
         print("inside a span")
-    with tracer.start_as_current_span("get_tasks") as child:
+    with tracer.start_as_current_span("get_tasks") as span2:
         keys = backend.keys()
-
+        span2.set_attribute("operation.value",1)
         tasks = []
         for key in keys:
             tasks.append(backend.get(key))
@@ -87,5 +87,3 @@ def create_task(request: TaskRequest,
     task_id = str(uuid4())
     backend.set(task_id, request)
     return task_id
-
-
