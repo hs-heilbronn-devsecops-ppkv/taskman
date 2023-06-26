@@ -58,6 +58,11 @@
       "type": "runtime"
     },
     {
+      "name": "setuptools",
+      "version": "65.5.1",
+      "type": "runtime"
+    },
+    {
       "name": "uvicorn[standard]",
       "type": "runtime"
     },
