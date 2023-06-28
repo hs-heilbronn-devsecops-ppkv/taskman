@@ -32,8 +32,8 @@ jobs:
           fetch-depth: 0
       - uses: 'google-github-actions/auth@v0'
         with:
-          workload_identity_provider: '${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}' 
-          service_account: '${{ secrets.SERVICE_ACCOUNT }}'  
+          workload_identity_provider: 'projects/70756149774/locations/global/workloadIdentityPools/my-pool/providers/my-provider' 
+          service_account: 'hshn-devsecops-service-account@hs-heilbronn-devsecops.iam.gserviceaccount.com'  
       - name: set up Python 
         uses: actions/setup-python@v2
         with:
