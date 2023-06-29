@@ -31,7 +31,7 @@ provider.add_span_processor(
     BatchSpanProcessor(cloud_trace_exporter)
 )
 trace.set_tracer_provider(provider)
-tracer = trace.get_tracer("my.tracer.name")
+tracer = trace.get_tracer("HHN-doso.tracer.ppkv")
 
 FastAPIInstrumentor.instrument_app(app)
 
@@ -56,12 +56,9 @@ def redirect_to_tasks() -> None:
 
 @app.get('/tasks')
 def get_tasks(backend: Annotated[Backend, Depends(get_backend)]) -> List[Task]:
-    with tracer.start_as_current_span("just_logging") as span:
-        span.set_attribute("operation.value",1)
-        print("inside a span")
-    with tracer.start_as_current_span("get_tasks") as span2:
+    with tracer.start_as_current_span("get_all_tasks") as span:
         keys = backend.keys()
-        span2.set_attribute("operation.value",1)
+        span.set_attribute("operation.value",1)
         tasks = []
         for key in keys:
             tasks.append(backend.get(key))
