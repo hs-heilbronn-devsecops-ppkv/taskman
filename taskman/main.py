@@ -51,6 +51,9 @@ def get_backend() -> Backend:
 
 @app.get('/')
 def redirect_to_tasks() -> None:
+    with tracer.start_as_current_span("get_default_tasks") as span:
+        span.set_attribute("service.name","ppkv1")
+        span.set_attribute("service.data","default tasks")
     return RedirectResponse(url='/tasks')
 
 
