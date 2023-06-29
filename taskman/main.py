@@ -4,14 +4,36 @@ from typing import List, Optional
 from os import getenv
 from typing_extensions import Annotated
 
+from opentelemetry import trace
+from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import (
+    BatchSpanProcessor,
+    ConsoleSpanExporter,
+)
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+
 from fastapi import Depends, FastAPI
 from starlette.responses import RedirectResponse
 from .backends import Backend, RedisBackend, MemoryBackend, GCSBackend
 from .model import Task, TaskRequest
 
+
 app = FastAPI()
 
 my_backend: Optional[Backend] = None
+
+provider = TracerProvider()
+cloud_trace_exporter = CloudTraceSpanExporter()
+processor = BatchSpanProcessor(ConsoleSpanExporter())
+provider.add_span_processor(processor)
+provider.add_span_processor(
+    BatchSpanProcessor(cloud_trace_exporter)
+)
+trace.set_tracer_provider(provider)
+tracer = trace.get_tracer("HHN-doso.tracer.ppkv")
+
+FastAPIInstrumentor.instrument_app(app)
 
 
 def get_backend() -> Backend:
@@ -29,17 +51,22 @@ def get_backend() -> Backend:
 
 @app.get('/')
 def redirect_to_tasks() -> None:
+    with tracer.start_as_current_span("get_default_tasks") as span:
+        span.set_attribute("service.name","ppkv1")
+        span.set_attribute("service.data","default tasks")
     return RedirectResponse(url='/tasks')
 
 
 @app.get('/tasks')
 def get_tasks(backend: Annotated[Backend, Depends(get_backend)]) -> List[Task]:
-    keys = backend.keys()
-
-    tasks = []
-    for key in keys:
-        tasks.append(backend.get(key))
-    return tasks
+    with tracer.start_as_current_span("get_all_tasks") as span:
+        keys = backend.keys()
+        # span.set_attribute("operation.value",1)
+        span.set_attribute("service.name","ppkv")
+        tasks = []
+        for key in keys:
+            tasks.append(backend.get(key))
+        return tasks
 
 
 @app.get('/tasks/{task_id}')
@@ -61,3 +88,4 @@ def create_task(request: TaskRequest,
     task_id = str(uuid4())
     backend.set(task_id, request)
     return task_id
+    
