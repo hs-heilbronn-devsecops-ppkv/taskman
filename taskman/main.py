@@ -59,7 +59,7 @@ def get_tasks(backend: Annotated[Backend, Depends(get_backend)]) -> List[Task]:
     with tracer.start_as_current_span("get_all_tasks"):
         keys = backend.keys()
         # span.set_attribute("operation.value",1)
-        # span.set_attribute("service.name","ppkv")
+          span.set_attribute("service.name","ppkv")
         tasks = []
         for key in keys:
             tasks.append(backend.get(key))
